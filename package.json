@@ -8,6 +8,7 @@
     "start": "npm run build && node dist/server.js",
     "start:dev": "babel-node src/server.js",
     "test:integration": "NODE_ENV=test mocha test/integration/**/*_spec.js",
+    "test:unit": "NODE_ENV=test mocha test/unit/**/*_spec.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lincoln Brito <lincoln.sbrito@gmail.com>",

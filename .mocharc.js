@@ -5,6 +5,7 @@ module.exports = {
     slow: 5000,
     require: [
         '@babel/register',
+        'test/unit/helpers.js',
         'test/integration/helpers.js'
     ]
 }
