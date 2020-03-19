@@ -1,0 +1,27 @@
+version: '3'
+services:
+  #APP
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile
+    ports:
+      - ${APP_PORT}:3000
+    volumes:
+      - ./src:/app
+    #working_dir: ./
+    networks:
+      - app-network
+  #DATABASE
+  database:
+    image: tutum/mongodb
+    ports:
+      - 27017:27017
+      - 28017:28017
+    environment:
+      MONGODB_PASS: ${MONGODB_PASS}
+networks:
+  app-network:
+    driver: bridge
+volumes:
+  dbdata: {}
