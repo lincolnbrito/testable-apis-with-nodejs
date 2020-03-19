@@ -7,21 +7,28 @@ services:
       dockerfile: ./docker/node/Dockerfile
     ports:
       - ${APP_PORT}:3000
-    volumes:
-      - ./src:/app
-    #working_dir: ./
+    working_dir: /var/www/html
+    volumes: 
+      - .:/var/www/html:rw
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - database
+    links:
+      - database
     networks:
       - app-network
   #DATABASE
   database:
     image: tutum/mongodb
     ports:
-      - 27017:27017
-      - 28017:28017
+      - ${MONGODB_PORT}:27017
     environment:
-      MONGODB_PASS: ${MONGODB_PASS}
+      AUTH: 'no'
+    networks:
+      - app-network
+    volumes: 
+      - ./data/db:/data/db
 networks:
   app-network:
     driver: bridge
-volumes:
-  dbdata: {}

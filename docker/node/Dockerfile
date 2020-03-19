@@ -1,12 +1,8 @@
-FROM node:10
+FROM node:12.14
 
-WORKDIR . /app
-
-COPY package*.json ./
+WORKDIR /var/www/html
 
 RUN npm install
-
-COPY . .
 
 EXPOSE 3000
 

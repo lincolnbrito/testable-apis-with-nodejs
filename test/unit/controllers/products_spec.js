@@ -1,5 +1,6 @@
 import ProductsController from '../../../src/controllers/ProductsController';
 import sinon from 'sinon';
+import Product from '../../../src/models/product';
 
 describe('Controller: Products', () => {
     const defaultProduct = [{
@@ -9,17 +10,19 @@ describe('Controller: Products', () => {
     }];
 
     describe('get() products', () => {
-        it('should return a list of products', () => {
+        it('should return a list of products', async () => {
             const request = {};
             const response = {
                 send: sinon.spy()
             };
+            
+            Product.find = sinon.stub();
+            Product.find.withArgs({}).resolves(defaultProduct);
 
-            const productsController = new ProductsController();
-            productsController.get(request, response);
+            const productsController = new ProductsController(Product);
+            await productsController.get(request, response);
 
-            expect(response.send.called).to.be.true;
-            expect(response.send.calledWith(defaultProduct)).to.be.true;
+            sinon.assert.calledWith(response.send, defaultProduct);
         });
     });
 });
