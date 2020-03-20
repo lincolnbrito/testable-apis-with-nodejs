@@ -8,11 +8,10 @@ class ProductsController {
 
         try {
             products = await this.Product.find({});
-        } catch (error) {
-            console.log(error);
+            res.send(products);
+        } catch (err) {
+            res.status(400).send(err.message)
         }
-        
-        res.send(products);
     }
 }
 
