@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 services:
   #APP
   app:
@@ -9,7 +9,7 @@ services:
       - ${APP_PORT}:3000
     working_dir: /var/www/html
     volumes: 
-      - .:/var/www/html:rw
+      - .:/var/www/html:z
     environment:
       NODE_ENV: development
     depends_on:
@@ -20,15 +20,17 @@ services:
       - app-network
   #DATABASE
   database:
-    image: tutum/mongodb
+    image: mongo
     ports:
       - ${MONGODB_PORT}:27017
     environment:
       AUTH: 'no'
     networks:
       - app-network
-    volumes: 
-      - ./data/db:/data/db
+    volumes:
+      - dbdata:/data/db
 networks:
   app-network:
     driver: bridge
+volumes: 
+  dbdata: {}
